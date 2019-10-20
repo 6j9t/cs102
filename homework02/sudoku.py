@@ -28,10 +28,11 @@ def group(values: List[str], n: int) -> List[List[str]]:
     >>> group([1,2,3,4,5,6,7,8,9], 3)
     [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
     """
-    x= [[0 for i in range(n)] for i in range (len(values)//n)]
-    for i in range(0,len(values)):
-        x[i//n][i%n]=values[i]
-    return x
+    list = [[0 for i in range(n)] for i in range(len(values) // n)]
+    for i in range(0, len(values)):
+        list[i // n][i % n] = values[i]
+    return list
+
 
 def get_row(grid: List[List[str]], pos: Tuple[int, int]) -> List[str]:
     """ Возвращает все значения для номера строки, указанной в pos
@@ -43,7 +44,7 @@ def get_row(grid: List[List[str]], pos: Tuple[int, int]) -> List[str]:
     >>> get_row([['1', '2', '3'], ['4', '5', '6'], ['.', '8', '9']], (2, 0))
     ['.', '8', '9']
     """
-    pass
+    return grid[pos[0]]
 
 
 def get_col(grid: List[List[str]], pos: Tuple[int, int]) -> List[str]:
@@ -56,7 +57,10 @@ def get_col(grid: List[List[str]], pos: Tuple[int, int]) -> List[str]:
     >>> get_col([['1', '2', '3'], ['4', '5', '6'], ['.', '8', '9']], (0, 2))
     ['3', '6', '9']
     """
-    pass
+    list = []
+    for i in range(len(grid)):
+        list.append(grid[i][pos[1]])
+    return list
 
 
 def get_block(grid: List[List[str]], pos: Tuple[int, int]) -> List[str]:
@@ -70,7 +74,13 @@ def get_block(grid: List[List[str]], pos: Tuple[int, int]) -> List[str]:
     >>> get_block(grid, (8, 8))
     ['2', '8', '.', '.', '.', '5', '.', '7', '9']
     """
-    pass
+    list = []
+    x = pos[0] // 3
+    y = pos[1] // 3
+    for i in range(3):
+        for j in range(3):
+            list.append(grid[i + 3 * x][j + 3 * y])
+    return list
 
 
 def find_empty_positions(grid: List[List[str]]) -> Optional[Tuple[int, int]]:
