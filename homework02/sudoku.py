@@ -1,4 +1,6 @@
 from typing import Tuple, List, Set, Optional
+import random
+import time
 
 
 def read_sudoku(filename: str) -> List[List[str]]:
@@ -192,14 +194,89 @@ def generate_sudoku(N: int) -> List[List[str]]:
     >>> check_solution(solution)
     True
     """
-    pass
+    grid = solve([['.' for i in range(9)] for i in range(9)])
+    grid = mix(grid)
+    if N > 81:
+        N = 81
+    dotnumber = 81 - N
+    while dotnumber != 0:
+        x = random.randrange(0, 9)
+        y = random.randrange(0, 9)
+        if (grid[x][y] != '.'):
+            grid[x][y] = '.'
+            dotnumber -= 1
+    return grid
+
+
+def transposing(grid: List[List[str]]) -> List[List[str]]:
+    # Транспонирование матрицы
+    grid = list(map(list, zip(*grid)))
+    return grid
+
+
+def swap_rows_small(grid: List[List[str]]) -> List[List[str]]:
+    # Обмен двух строк в пределах одного блока
+    area = random.randrange(0, 3, 1)
+    line1 = random.randrange(0, 3, 1)
+    N1 = area * 3 + line1
+    line2 = random.randrange(0, 3, 1)
+    while (line1 == line2):
+        line2 = random.randrange(0, 3, 1)
+    N2 = area * 3 + line2
+    grid[N1], grid[N2] = grid[N2], grid[N1]
+    return grid
+
+
+def swap_colums_small(grid: List[List[str]]) -> List[List[str]]:
+    # Обмен двух столбцов в пределах одного блока
+    grid = transposing(grid)
+    grid = swap_rows_small(grid)
+    grid = transposing(grid)
+    return grid
+
+
+def swap_rows_area(grid: List[List[str]]) -> List[List[str]]:
+    # Обмен двух райнов (наборов по 3 строки одного блока)
+    area1 = random.randrange(0, 3, 1)
+    area2 = random.randrange(0, 3, 1)
+    while (area1 == area2):
+        area2 = random.randrange(0, 3, 1)
+    for i in range(0, 3):
+        N1, N2 = area1 * 3 + i, area2 * 3 + i
+        grid[N1], grid[N2] = grid[N2], grid[N1]
+    return grid
+
+
+def swap_colums_area(grid: List[List[str]]) -> List[List[str]]:
+    # Обмен двух районов (наборов по 3 столбца одного блока)
+    grid = transposing(grid)
+    grid = swap_rows_area(grid)
+    grid = transposing(grid)
+    return grid
+
+
+def mix(grid: List[List[str]]) -> List[List[str]]:
+    # Рандомизация генератора судоку.
+    mix_func = ['transposing(grid)',
+                'swap_rows_small(grid)',
+                'swap_colums_small(grid)',
+                'swap_rows_area(grid)',
+                'swap_colums_area(grid)']
+    # Цикл выполняется 30 раз. Это число взято случайно
+    for i in range(1, 30):
+        id_func = random.randrange(0, len(mix_func), 1)
+        eval(mix_func[id_func])
+    return grid
 
 
 if __name__ == '__main__':
     for fname in ['puzzle1.txt', 'puzzle2.txt', 'puzzle3.txt']:
         grid = read_sudoku(fname)
         display(grid)
+        start = time.time()
         solution = solve(grid)
+        end = time.time()
+        print(f'{fname}: {end-start}')
         if not solution:
             print(f"Puzzle {fname} can't be solved")
         else:
