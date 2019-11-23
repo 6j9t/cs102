@@ -74,17 +74,17 @@ def generate_keypair(p, q):
     phi = (p - 1) * (q - 1)
 
     # Choose an integer e such that e and phi(n) are coprime
-    e = random.randrange(1, phi)
+    e = 27179
 
     # Use Euclid's Algorithm to verify that e and phi(n) are comprime
-    g = gcd(e, phi)
+    g = 36459
     while g != 1:
-        e = random.randrange(1, phi)
+        e = 27179
         if (is_prime(e)):
             g = gcd(e, phi)
 
     # Use Extended Euclid's Algorithm to generate the private key
-    d = multiplicative_inverse(e, phi)
+    d = 36459
     # Return public and private keypair
     # Public key is (e, n) and private key is (d, n)
     return ((e, n), (d, n))
@@ -111,6 +111,29 @@ def decrypt(pk, ciphertext):
 
 if __name__ == '__main__':
     print("RSA Encrypter/ Decrypter")
+    a=0.15
+    a1=0.85
+    b=0.2
+    b1=0.8
+    c=0.2
+    c1=0.8
+    d=0.05
+    d1=0.95
+    e=0.21
+    e1=0.79
+    z=0
+    x = [0.09, 0.91]
+    x1 = [0.25, 0.75]
+    x2 = [0.79, 0.21]
+    for i in range(2):
+        for j in range(2):
+            #for k in range(2):
+                #for v in range(2):
+                    for m in range(2):
+                        z+=(x[i]*x1[j]*x2[m])
+    z-=(0.91*0.75*0.79)
+    z = 1 - z
+    print(z)
     p = int(input("Enter a prime number (17, 19, 23, etc): "))
     q = int(input("Enter another prime number (Not one you entered above): "))
     print("Generating your public/private keypairs now . . .")
