@@ -13,8 +13,6 @@ def age_predict(user_id: int) -> Optional[float]:
 
     :param user_id: идентификатор пользователя
     :return: медианный возраст пользователя
-    >>> age_predict(43063510)
-    [[1, 2], [3, 4]]
     """
     assert isinstance(user_id, int), "user_id must be positive integer"
     assert user_id > 0, "user_id must be positive integer"

@@ -1,3 +1,7 @@
 domain = 'https://api.vk.com/method'
-access_token = '64b661bd03503b46a61e94639497f4db6373a0893dfdb7f9114e1fbcaae67591056b42d9ec511b0585c85'
+access_token = 'b1df424c445e2deb25228e3fe4d0b08228b21adbbef7ee665f696d9c4a03ccc2b5db024015babcdfba2ea'
 v = '5.103'
+PLOTLY_CONFIG = {
+    'username': 'Имя пользователя Plot.ly',
+    'api_key': 'Ключ доступа Plot.ly',
+}
